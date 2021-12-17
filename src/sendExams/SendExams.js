@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import Input from '../shared/input';
 import PageContainer from '../shared/pageContainer';
 import Button from '../shared/button';
+import InputField from './InputField';
 import { useEffect, useState } from 'react';
 import { getInfo, getTeacherInfo, sendExam } from '../services/api';
 import { useNavigate } from 'react-router';
+import CategoryField from './CategoryField';
 
 export default function SendExams() {
     const navigate = useNavigate();
@@ -17,6 +19,8 @@ export default function SendExams() {
         teacher: '',
         link: '',
     });
+
+    console.log(exam);
 
     useEffect(() => {
         (async function () {
@@ -48,57 +52,12 @@ export default function SendExams() {
                 alert('Prova enviada com sucesso');
             })
             .catch((err) => {
-                console.log(err.response);
                 if (err.response.status === 400) {
                     if (err.response.data.includes('link')) {
                         alert('Por favor, digite uma url válida de pdf');
                     }
                 }
             });
-    }
-
-    function handleChange(e) {
-        if (e.target.id === 'name') {
-            setExam({
-                ...exam,
-                name: e.target.value,
-            });
-        }
-        if (e.target.id === 'category') {
-            setExam({
-                ...exam,
-                category: e.target.value,
-            });
-        }
-        if (e.target.id === 'semester') {
-            setExam({
-                ...exam,
-                semester: e.target.value,
-            });
-        }
-        if (e.target.id === 'subject') {
-            setExam({
-                ...exam,
-                subject: e.target.value,
-            });
-
-            const promise = getTeacherInfo(e.target.value);
-            promise.then((res) =>
-                setInfo({ ...info, teachers: res.data.map((el) => el.teacher) })
-            );
-        }
-        if (e.target.id === 'teacher') {
-            setExam({
-                ...exam,
-                teacher: e.target.value,
-            });
-        }
-        if (e.target.id === 'link') {
-            setExam({
-                ...exam,
-                link: e.target.value,
-            });
-        }
     }
 
     return (
@@ -108,80 +67,47 @@ export default function SendExams() {
                 Preencha os campos abaixo para enviar uma nova prova
             </Description>
             <Form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Nome da prova</label>
-                    <Input
-                        id="name"
-                        required
-                        value={exam.name}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="category">Categoria</label>
-                    <Select
-                        id="category"
-                        required
-                        value={exam.category}
-                        onChange={handleChange}
-                    >
-                        {info
-                            ? info.categories.map((el, i) => (
-                                  <option key={i}>{el.name}</option>
-                              ))
-                            : ''}
-                    </Select>
-                </div>
-                <div>
-                    <label htmlFor="semester">Semestre</label>
-                    <Select
-                        id="semester"
-                        required
-                        value={exam.semester}
-                        onChange={handleChange}
-                    >
-                        {info
-                            ? info.semesters.map((el, i) => (
-                                  <option key={i}>{el.name}</option>
-                              ))
-                            : ''}
-                    </Select>
-                </div>
-                <div>
-                    <label htmlFor="subject">Disciplina</label>
-                    <Select
-                        id="subject"
-                        required
-                        value={exam.subject}
-                        onChange={handleChange}
-                    >
-                        {info
-                            ? info.subjects.map((el, i) => (
-                                  <option key={i}>{el.name}</option>
-                              ))
-                            : ''}
-                    </Select>
-                </div>
-                <div>
-                    <label htmlFor="teacher">Professor</label>
-                    <Select id="teacher" required>
-                        {info
-                            ? info.teachers.map((el, i) => (
-                                  <option key={i}>{el.name}</option>
-                              ))
-                            : ''}
-                    </Select>
-                </div>
-                <div>
-                    <label htmlFor="link">Link da prova</label>
-                    <Input
-                        id="link"
-                        type="url"
-                        required
-                        value={exam.link}
-                        onChange={handleChange}
-                    />
-                </div>
+                <InputField
+                    exam={exam}
+                    setExam={setExam}
+                    inputType={'name'}
+                    inputName={'Nome da prova'}
+                />
+                <CategoryField
+                    exam={exam}
+                    setExam={setExam}
+                    categoryType={'category'}
+                    categoryName={'Categoria'}
+                    info={info}
+                />
+                <CategoryField
+                    exam={exam}
+                    setExam={setExam}
+                    categoryType={'semester'}
+                    categoryName={'Semestre'}
+                    info={info}
+                />
+                <CategoryField
+                    exam={exam}
+                    setExam={setExam}
+                    categoryType={'subject'}
+                    categoryName={'Disciplina'}
+                    info={info}
+                    setInfo={setInfo}
+                />
+                <CategoryField
+                    exam={exam}
+                    setExam={setExam}
+                    categoryType={'teacher'}
+                    categoryName={'Professor'}
+                    info={info}
+                />
+                <InputField
+                    exam={exam}
+                    setExam={setExam}
+                    inputType={'link'}
+                    inputName={'Link da prova'}
+                />
 
                 <Buttons>
                     <Button onClick={() => navigate('/')}>Voltar</Button>
