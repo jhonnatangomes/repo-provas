@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Input from '../shared/input';
 import PageContainer from '../shared/pageContainer';
 import Button from '../shared/button';
 import InputField from './InputField';
