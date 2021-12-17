@@ -1,14 +1,9 @@
 import styled from 'styled-components';
 import { getTeacherInfo } from '../services/api';
 
-export default function CategoryField({
-    exam,
-    setExam,
-    categoryType,
-    categoryName,
-    info,
-    setInfo,
-}) {
+export default function CategoryField(props) {
+    const { exam, setExam, categoryType, categoryName, info, setInfo } = props;
+
     const pluralCategoryType =
         categoryType === 'category' ? 'categories' : categoryType + 's';
 

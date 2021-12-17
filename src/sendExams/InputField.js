@@ -1,6 +1,7 @@
 import Input from '../shared/input';
 
-export default function InputField({ exam, setExam, inputType, inputName }) {
+export default function InputField(props) {
+    const { exam, setExam, inputType, inputName } = props;
     function handleChange(e) {
         setExam({
             ...exam,

@@ -20,10 +20,8 @@ export default function SendExams() {
         link: '',
     });
 
-    console.log(exam);
-
     useEffect(() => {
-        (async function () {
+        (async function getInfoFromServer() {
             const infoFromServer = await getInfo();
             const teacherFromServer = await getTeacherInfo(
                 infoFromServer.data.subjects[0].name
@@ -150,19 +148,6 @@ const Form = styled.form`
     label {
         width: 200px;
         padding-bottom: 10px;
-    }
-`;
-
-const Select = styled.select`
-    width: 100%;
-    height: 35px;
-    border-radius: 5px;
-    border: none;
-    background-color: white;
-    padding: 10px;
-
-    option {
-        background-color: white;
     }
 `;
 
