@@ -13,4 +13,7 @@ const sendExam = (body) => axiosBase.post('/provas', body);
 
 const getTeachers = () => axiosBase.get('/provas/professores');
 
-export { getInfo, getTeacherInfo, sendExam, getTeachers };
+const getExamsByTeachers = (teacherId) =>
+    axiosBase.get(`/provas/professores/${teacherId}`);
+
+export { getInfo, getTeacherInfo, sendExam, getTeachers, getExamsByTeachers };
