@@ -19,23 +19,25 @@ export default function SendExams() {
         link: '',
     });
 
+    console.log(info?.teachers);
+
     useEffect(() => {
         (async function getInfoFromServer() {
             const infoFromServer = await getInfo();
             const teacherFromServer = await getTeacherInfo(
-                infoFromServer.data.subjects[0].name
+                infoFromServer.data.subjects[0]
             );
 
             setInfo({
                 ...infoFromServer.data,
-                teachers: teacherFromServer.data.map((el) => el.teacher),
+                teachers: teacherFromServer.data.teachers,
             });
             setExam({
                 ...exam,
-                category: infoFromServer.data.categories[0].name,
-                semester: infoFromServer.data.semesters[0].name,
-                subject: infoFromServer.data.subjects[0].name,
-                teacher: teacherFromServer.data[0].teacher.name,
+                category: infoFromServer.data.categories[0],
+                semester: infoFromServer.data.semesters[0],
+                subject: infoFromServer.data.subjects[0],
+                teacher: teacherFromServer.data.teachers[0],
             });
         })();
     }, []);
