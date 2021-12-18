@@ -16,7 +16,7 @@ export default function CategoryField(props) {
         if (e.target.id === 'subject') {
             const promise = getTeacherInfo(e.target.value);
             promise.then((res) =>
-                setInfo({ ...info, teachers: res.data.map((el) => el.teacher) })
+                setInfo({ ...info, teachers: res.data.teachers })
             );
         }
     }
@@ -32,7 +32,7 @@ export default function CategoryField(props) {
             >
                 {info
                     ? info[pluralCategoryType].map((el, i) => (
-                          <option key={i}>{el.name}</option>
+                          <option key={i}>{el}</option>
                       ))
                     : ''}
             </Select>
