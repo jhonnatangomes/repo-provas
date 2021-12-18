@@ -9,8 +9,6 @@ export default function ExamsByCategory() {
     const teacher = 'teacher';
     const [exams, setExams] = useState(null);
 
-    console.log(exams);
-
     useEffect(() => {
         const promise = getExamsByTeachers(teacherId);
         promise.then((res) => setExams(res.data));

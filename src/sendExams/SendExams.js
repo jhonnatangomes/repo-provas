@@ -19,8 +19,6 @@ export default function SendExams() {
         link: '',
     });
 
-    console.log(info?.teachers);
-
     useEffect(() => {
         (async function getInfoFromServer() {
             const infoFromServer = await getInfo();
