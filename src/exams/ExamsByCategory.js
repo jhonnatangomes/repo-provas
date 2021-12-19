@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 import styled from 'styled-components';
-import { getExamsByTeachers } from '../services/api';
+import { getExamsBySubjects, getExamsByTeachers } from '../services/api';
 
 export default function ExamsByCategory() {
     const location = useLocation();
-    const { id: teacherId } = useParams();
-    const teacher = 'teacher';
+    const params = useParams();
     const [exams, setExams] = useState(null);
 
     useEffect(() => {
-        const promise = getExamsByTeachers(teacherId);
-        promise.then((res) => setExams(res.data));
+        if (location.pathname.includes('/professores')) {
+            const { id: teacherId } = params;
+            const promise = getExamsByTeachers(teacherId);
+            promise.then((res) => setExams(res.data));
+        }
+        if (location.pathname.includes('/disciplinas')) {
+            const { semesterId, subjectId } = params;
+            const promise = getExamsBySubjects(semesterId, subjectId);
+            promise.then((res) => setExams(res.data));
+        }
     }, []);
 
     return (
@@ -19,7 +26,7 @@ export default function ExamsByCategory() {
             <Title>
                 {location.pathname.includes('/professores')
                     ? `Professor: ${exams ? exams.teacher : ''}`
-                    : `Disciplina: ${teacher}`}
+                    : `Disciplina: ${exams ? exams.subject : ''}`}
             </Title>
             <Groups>
                 {exams &&
@@ -32,10 +39,22 @@ export default function ExamsByCategory() {
                                         href={innerEl.link}
                                         target="_blank"
                                         rel="noreferrer"
+                                        key={j}
                                     >
-                                        <Exam key={j}>
+                                        <Exam>
                                             <p>Nome: {innerEl.name}</p>
-                                            <p>Disciplina: {innerEl.subject}</p>
+                                            {location.pathname.includes(
+                                                '/professores'
+                                            ) ? (
+                                                <p>
+                                                    Disciplina:{' '}
+                                                    {innerEl.subject}
+                                                </p>
+                                            ) : (
+                                                <p>
+                                                    Professor: {innerEl.teacher}
+                                                </p>
+                                            )}
                                         </Exam>
                                     </a>
                                 ))}

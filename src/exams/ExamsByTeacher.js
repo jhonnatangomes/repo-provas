@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import PageContainer from '../shared/pageContainer';
 import { useEffect, useState } from 'react';
 import { getTeachers } from '../services/api';
 
 export default function ExamsByType() {
-    const location = useLocation();
     const navigate = useNavigate();
     const [teachers, setTeachers] = useState(null);
 
@@ -16,11 +15,7 @@ export default function ExamsByType() {
 
     return (
         <PageContainer>
-            <Title>
-                {location.pathname.includes('professores')
-                    ? 'Professores'
-                    : 'Disciplinas'}
-            </Title>
+            <Title>Professores</Title>
             <Teachers>
                 {teachers &&
                     teachers.map((teacher) => (
