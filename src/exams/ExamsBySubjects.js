@@ -8,8 +8,6 @@ export default function ExamsBySubjects() {
     const navigate = useNavigate();
     const [subjects, setSubjects] = useState(null);
 
-    console.log(subjects);
-
     useEffect(() => {
         const promise = getSubjects();
         promise.then((res) => setSubjects(res.data));
