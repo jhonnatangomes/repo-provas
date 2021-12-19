@@ -55,27 +55,6 @@ const Title = styled.span`
     top: 50px;
 `;
 
-const Teachers = styled.div`
-    display: flex;
-
-    div {
-        margin-right: 20px;
-        margin-bottom: 20px;
-    }
-`;
-
-const Teacher = styled.div`
-    border-radius: 5px;
-    width: 200px;
-    height: 200px;
-    background-color: white;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-`;
-
 const Groups = styled.div`
     width: 90vw;
     & > div:not(:last-child) {
